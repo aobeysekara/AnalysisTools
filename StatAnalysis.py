@@ -18,15 +18,19 @@ import numpy as np
 import copy
 import csv
 
-output_name = 'jet_flow_fixed'
-tests_list =[2,3] #[1,2,3,4,5,6,7,8]
+output_name = 'jet_flow_fixed' #file name
+max_t=20 #sample size
+nSims=8 #number of tests
+cpn=36 #number of cores per HPC node
+
+tests_list =[1,2,3,4,5,6,7,8]
+nodes_list =[1, 10,20,30,40,50,60,70]
+
+
 tests_list.sort(key=int)
 sub_tests = [[0] * 0 for i in range(len(tests_list))]
-max_t=[1,2]
-nodes_list =[10,20] #[1, 10,20,30,40,50,60,70]
-cores_list = [x*36 for x in nodes_list]
+cores_list = [x*cpn for x in nodes_list]
 print cores_list
-max_t=20
 
 wall_times_max = copy.deepcopy(tests_list)
 wall_times_min = copy.deepcopy(tests_list)
@@ -61,30 +65,34 @@ for testy in sub_tests[:]:
         tests_list2[k]=dirc
         #Retrieve the walltime for each simulation
         t=0
-        T=[0.0]*20
-        for t in range(0,20):
+        T=[0.0]*max_t
+        TimeS=[0.0]*max_t
+        for t in range(1,21):
             p = stat(dirc +'/'+output_name+'.stat')["ElapsedWallTime"]["value"][-1-t]
-            p2 = stat(dirc +'/'+output_name+'.stat')["ElapsedWallTime"]["value"][-1-(t+1)]
-            t_deltat= p-p2
-            T[t]=t_deltat
+            p2 = stat(dirc +'/'+output_name+'.stat')["ElapsedWallTime"]["value"][-1-(t-1)]
+            t_deltat= abs(p2-p)
+            T[t-1]=t_deltat
             #also the total number of time
-            EqFPIs = stat(dirc +'/'+output_name+'.stat')["ElapsedTime"]["value"][-1-t]
+            TimeS[t-1] = stat(dirc +'/'+output_name+'.stat')["ElapsedTime"]["value"][-1-(t-1)]
             # and the number of elements
-            aux = stat(dirc +'/'+output_name+'.stat')["CoordinateMesh"]["elements"][-1]
+            aux = stat(dirc +'/'+output_name+'.stat')["CoordinateMesh"]["elements"][-1-(t-1)]
             Eles = aux#Average of number of elements
-            for n, i in enumerate(wall_times_max):
-                if i == testy[k]:
-                    wall_times_max[n] = np.amax(T)
-                    wall_times_min[n] = np.amin(T)
-                    wall_times_avg[n] = np.mean(T)
-                    TotalT[n] = EqFPIs
-                    TotalCores[n] = Eles/cores_list[k]
+        for n, i in enumerate(wall_times_max):
+            if i == testy[k]:
+                print 'n:', n, 'and', 'i:',i
+                wall_times_max[n] = np.amax(T)
+                wall_times_min[n] = np.amin(T)
+                wall_times_avg[n] = np.mean(T)
+                TotalT[n] = np.amax(TimeS)
+                TotalCores[n] = Eles/cores_list[k]
         k +=1
+        print T, len(T)
         T_max=max(T)
         T_min=min(T)
         T_avg=np.mean(T)
-        print T_max, T_min, T_avg
-        print wall_times_avg
+        print T_max, T_min
+        #print T_max, T_min, T_avg
+        #print wall_times_avg
     #Now create a csv file with the number of cpus and times used (make this into a function)
     with open('HPCprofiling.csv', mode='w') as walltimes_file:
         walltimes_writer = csv.writer(walltimes_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
