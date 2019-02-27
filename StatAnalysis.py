@@ -30,8 +30,6 @@ nodes_list =[1, 10,20,30,40,50,60,70]
 tests_list.sort(key=int)
 sub_tests = [[0] * 0 for i in range(len(tests_list))]
 cores_list = [x*cpn for x in nodes_list]
-print cores_list
-
 wall_times_max = copy.deepcopy(tests_list)
 wall_times_min = copy.deepcopy(tests_list)
 wall_times_avg = copy.deepcopy(tests_list)
@@ -57,13 +55,12 @@ while len(tests_list) > 0:
             tests_list.remove(x)
 
 #Prepare the commands to run batches of simulations
-commands = []
 for testy in sub_tests[:]:
     k = 0
     while len(testy) > k:
         dirc = 'N'+str(testy[k])
         tests_list2[k]=dirc
-        #Retrieve the walltime for each simulation
+        #Retrieve the walltimes and timesteps for each simulation
         t=0
         T=[0.0]*max_t
         TimeS=[0.0]*max_t
@@ -86,14 +83,7 @@ for testy in sub_tests[:]:
                 TotalT[n] = np.amax(TimeS)
                 TotalCores[n] = Eles/cores_list[k]
         k +=1
-        print T, len(T)
-        T_max=max(T)
-        T_min=min(T)
-        T_avg=np.mean(T)
-        print T_max, T_min
-        #print T_max, T_min, T_avg
-        #print wall_times_avg
-    #Now create a csv file with the number of cpus and times used (make this into a function)
+    #Now create a csv file with the number of cpus and times used
     with open('HPCprofiling.csv', mode='w') as walltimes_file:
         walltimes_writer = csv.writer(walltimes_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         rows = zip(tests_list2,TotalCores,wall_times_max,wall_times_min,wall_times_avg,TotalT)
