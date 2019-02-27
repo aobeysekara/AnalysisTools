@@ -22,7 +22,7 @@ output_name = 'CylinderVF' #file name
 max_t=18 #sample size
 nSims=8 #number of tests
 cpn=36 #number of cores per HPC node
-END=True
+END=True #sample the end of the simulation (=True) or the start of the simulation (=FALSE)
 tests_list =[0]
 nodes_list =[1]
 
