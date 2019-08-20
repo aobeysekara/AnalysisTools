@@ -10,13 +10,11 @@
 
 import sys
 import os
-import numpy as np
 import csv
 import vtk
-import sys
 from math import *
-import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib.pyplot as plt
 from scipy import interpolate
 from scipy.interpolate import interp1d
 
@@ -52,20 +50,33 @@ class CSVplotter(object):
 
 
 class GeneralPlotter(object):
-
+#this is the general plotter class, this will contain plotting tools
+#for statfiles, csv and vtk
     def __init__(self, file):
         self.file = file
 
-    def csv_plotter(name):
-        	x,y = for row in in CSVplotter(name)
+
+    def csv_plotter(self):
+            filename, file_extension = os.path.splitext(self.file)
+            if file_extension == '.csv':
+                type=1
+            elif file_extension == '.stat':
+                type=2
+            elif file_extension == '.vtu':
+                type=3
+            else:
+                print("Error: Unrecognised file type {0}".format(file_extension))
+                sys.exit()
+
+            fig, ax = plt.subplots(1, sharex=True)
+            if type == 1: #this is for CSV
+                x,y = for row in in CSVplotter(self.file)
+            else:
+                print("ONLY READING CSV AT THE MOMENT")
+                sys.exit()
 
         	line = plt.Line2D(x, y, color='red', linewidth=2)
-        	#line.text.set_color('red')
-        	#line.text.set_fontsize(16)
         	ax[0].add_line(line)
-        	line3 = plt.Line2D(x, yp, color='red', linewidth=2)
-        	ax[1].add_line(line3)
-
 
         	plt.show()
 
@@ -73,4 +84,4 @@ class GeneralPlotter(object):
 
 
 if __name__ == "__main__":
-    GeneralPlotter(name)
+    GeneralPlotter(name,1)

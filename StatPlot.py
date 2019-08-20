@@ -54,3 +54,8 @@ class StatPlot:
                     TotalT[n] = np.amax(TimeS)
                     TotalCores[n] = Eles/cores_list[n]
                     k +=1
+
+if __name__ == "__main__":
+	print("thanks for using StatPlot")
+	r1=StatPlot(name, field)
+
