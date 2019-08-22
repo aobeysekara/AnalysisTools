@@ -1,5 +1,13 @@
 import AnalysisTools.VTK_filters as vt
+import AnalysisTools.CSV_plotter as ct
 
+
+SIZE=2;
+SIZE2=0.8;
+################## CSV Plotter
+ct.Plot('file.csv','label').plotscatter(SIZE,SIZE2,'markercolor','markerstyle')
+
+############## VTK plotter
 field='TimeAverageVelocity'
 vtu_number='50'
 U_C=0.39; #speed
@@ -22,6 +30,8 @@ color='black'
 label='label1'
 X,Y=vt.VTKfilter(path, vtuname, field).Line(X1,X2,Y1,Y2,Z1,Z2,res)
 vt.Plotter(X,Y,label,color).VTKplot(X1,0,D,U_C)
+
+
 
 
 ###
