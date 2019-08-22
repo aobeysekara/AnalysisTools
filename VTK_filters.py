@@ -30,18 +30,13 @@ from math import *
 from scipy import interpolate
 
 
-Xi=0.05
-U_C=0.39;
-D=0.01;
-
-
 class VTKfilter():
     def __init__(self, path, vtuname, field):
         self.path=path
         self.vtuname=vtuname
         self.field=field
 
-    def Line(self,X1,X2,Y1,Y2,Z1,Z2):
+    def Line(self,X1,X2,Y1,Y2,Z1,Z2,res):
         parallel=False
         if self.vtuname.endswith(".pvtu"):
             parallel=True
@@ -90,7 +85,7 @@ class VTKfilter():
         z0 = Z1
         z1 = Z2
         #Resolution of the probe
-        resolution = 1000
+        resolution = res
         #ugrid.Update()
         ###########Create the probe line#############
         Field=[]
@@ -112,8 +107,6 @@ class VTKfilter():
         detectors = vtk.vtkPolyData()
         detectors.SetPoints(points)
         ###########Create the probe line end#############
-
-
         probe = vtk.vtkProbeFilter()
         probe.SetInputConnection(ugrid)
         probe.SetSourceConnection(ugrid)
@@ -129,18 +122,20 @@ class VTKfilter():
 
 class Plotter():
     def __init__(self, X, Y, label, color):
-        self.X = X
-        self.Y = Y
+        self.X = X #
+        self.Y = Y #currently a vector array
         self.label=label
         self.color=color
 
-    def VTKplot(self):
+    def VTKplot(self, Xi,Yi,Xd,Yd):
+        #Xi and Xd are the numerator and denomiator scaling factors, respectively
+        #Yi and Yd are the numerator and denomiator scaling factors, respectively
     	xN = []
     	yN = []
         for i in range(len(self.X)):
             if (float(self.Y[i][0]) != 0):
-            	xN.append((float(self.X[i][0])-Xi)/D)#+0.5)#In this test case the origin is in -0.5
-            	yN.append(float(self.Y[i][0])/U_C)
+            	xN.append((float(self.X[i][0])-Xi)/Xd)#+0.5)#In this test case the origin is in -0.5
+            	yN.append((float(self.Y[i][0])-Yi)/Yd)
         print(self.label)
         plt.plot(xN, yN, label=self.label,color=self.color, linestyle='dashed', linewidth=0.5, markersize=1)
 
