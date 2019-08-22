@@ -1,9 +1,34 @@
 #!/usr/bin/env python
+
+###############################################################################
+# Author: Dr. Asiri I.B. Obeysekara
+# Date: 20/08/2019
+#
+#  {WORK IN PROGRESS}
+#
+# this pythong module allows the user to define a line to plot field variables
+# from VTU and PVTU (parallel) files, which are the usual output files from
+# CFD software IC-FERST
+#
+# classes: Filter class and plotting class.
+#
+#
+# Filter class: inputs are path, filename and field for initilisation
+#               line filter: inputs are the coordinates (in cartesian) of the
+#               line
+#
+# Plotting class: inputs are X and Y fields
+#                 returns a line in plt.
+###############################################################################
+
+
+
 import matplotlib.pyplot as plt
 import numpy as np
 import vtk
 from math import *
 from scipy import interpolate
+
 
 Xi=0.05
 U_C=0.39;
