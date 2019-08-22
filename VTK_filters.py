@@ -21,7 +21,14 @@
 #                 returns a line in plt.
 ###############################################################################
 
-
+__author__="Asiri I.B. Obeysekara"
+__copyright__ = "Copyright 2019, AnalysisTools - AObeysekara"
+__credits__ = ["AMCG", "Imperial College London"]
+__license__ = "GPL"
+__version__ = "1.0.1"
+__maintainer__ = "A Obeysekara"
+__email__ = "a.obeysekara@imperial.ac.uk"
+__status__ = "Production"
 
 import matplotlib.pyplot as plt
 import numpy as np
