@@ -10,17 +10,15 @@ Yi=0.15
 Zi=0.015725
 U_C=0.39;
 D=0.01;
-SIZE=2;
-SIZE2=0.8;
+
 
 class VTKfilter():
-    def __init__(self, path, vtuname, field,label):
+    def __init__(self, path, vtuname, field):
         self.path=path
         self.vtuname=vtuname
         self.field=field
-        self.label=label
 
-    def WakeVel(self,color):
+    def WakeVel(self):
         showPlot = True;
         parallel=False
         if self.vtuname.endswith(".pvtu"):
@@ -105,14 +103,25 @@ class VTKfilter():
                 #print(data.GetPointData().GetScalars("vtkValidPointMask").GetValue(j))
                 Field.append( data.GetPointData().GetScalars(data_name_field).GetTuple(j))
 
-        	xN = []
-        	yN = []
-            for i in range(len(detector)):
-                if (float(Field[i][0]) != 0):
-                	xN.append((float(detector[i][0])-x0)/D)#+0.5)#In this test case the origin is in -0.5
-                	yN.append(float(Field[i][0])/U_C)
-            print(self.label)
-            plt.plot(xN, yN, label=self.label,color=color, linestyle='dashed', linewidth=0.5, markersize=1)
+            return detector, Field
+
+
+class Plotter():
+    def __init__(self, X, Y, label, color):
+        self.X = X
+        self.Y = Y
+        self.label=label
+        self.color=color
+
+    def VTKplot(self):
+    	xN = []
+    	yN = []
+        for i in range(len(self.X)):
+            if (float(self.Y[i][0]) != 0):
+            	xN.append((float(self.X[i][0])-x0)/D)#+0.5)#In this test case the origin is in -0.5
+            	yN.append(float(self.Y[i][0])/U_C)
+        print(self.label)
+        plt.plot(xN, yN, label=self.label,color=self.color, linestyle='dashed', linewidth=0.5, markersize=1)
 
 
 

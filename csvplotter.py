@@ -19,8 +19,6 @@ from scipy import interpolate
 from scipy.interpolate import interp1d
 
 class CSVplotter(object):
-    filtered = []
-
     #parent class of data reader
     def __init__(self, file):
         self.file=file
@@ -55,7 +53,6 @@ class GeneralPlotter(object):
     def __init__(self, file):
         self.file = file
 
-
     def csv_plotter(self):
             filename, file_extension = os.path.splitext(self.file)
             if file_extension == '.csv':
@@ -82,6 +79,5 @@ class GeneralPlotter(object):
 
 
 
-
 if __name__ == "__main__":
-    GeneralPlotter(name,1)
+    GeneralPlotter(name)
