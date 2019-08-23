@@ -97,6 +97,7 @@ class VTKfilter():
         ###########Create the probe line#############
         Field=[]
         detector = []
+        Dline=[]
         hx = (x1 - x0) / resolution
         hy = (y1 - y0) / resolution
         hz = (z1 - z0) / resolution
@@ -119,13 +120,15 @@ class VTKfilter():
         probe.SetSourceConnection(ugrid)
         probe.SetInputData(detectors)
         probe.Update()
+        valid_ids = probe.GetOutput().GetPointData().GetArray("vtkValidPointMask")
 
         data = probe.GetOutput()
         for j in range(points.GetNumberOfPoints()):
-            #print(data.GetPointData().GetScalars("vtkValidPointMask").GetValue(j))
-            Field.append( data.GetPointData().GetScalars(data_name_field).GetTuple(j))
-        return detector, Field
-
+            ID=valid_ids.GetTuple(j)
+            if ID[0] > 0:
+                Dline.append(detector[j][:])
+                Field.append( data.GetPointData().GetScalars(data_name_field).GetTuple(j))
+        return Dline, Field
 
 class Plotter():
     def __init__(self, X, Y, label, color):
@@ -134,19 +137,19 @@ class Plotter():
         self.label=label
         self.color=color
 
-    def VTKplot(self, Xi,Yi,Xd,Yd):
+    def VTKplot(self, Xi,Yi,Xd,Yd,XN,FN):
         #Xi and Xd are the numerator and denomiator scaling factors, respectively
         #Yi and Yd are the numerator and denomiator scaling factors, respectively
     	xN = []
     	yN = []
         for i in range(len(self.X)):
-            if (float(self.Y[i][0]) != 0):
-            	xN.append((float(self.X[i][0])-Xi)/Xd)#+0.5)#In this test case the origin is in -0.5
-            	yN.append((float(self.Y[i][0])-Yi)/Yd)
+            #if (float(self.Y[i][0]) != 0):
+            xN.append((float(self.X[i][XN])-Xi)/Xd)#+0.5)#In this test case the origin is in -0.5
+            yN.append((float(self.Y[i][FN])-Yi)/Yd)
         print(self.label)
         plt.plot(xN, yN, label=self.label,color=self.color, linestyle='dashed', linewidth=0.5, markersize=1)
 
 
 
 if __name__ == '__main__':
-    print('this is a module')
+    print('this is a vtk module')
