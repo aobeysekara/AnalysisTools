@@ -1,21 +1,19 @@
-import CFDAnalysisTools.VTK_filters as vt
-import CFDAnalysisTools.CSV_plotter as ct
 import matplotlib.pyplot as plt
 import os
 import sys
 
-path = os.getcwd()
-path2= os.path.dirname(path)
-
-print(path2+'/'+'CFDAnalysisTools')
+module_path = os.getcwd()
+path2= os.path.dirname(module_path)
 
 try:
-    sys.path.index(path2+'/'+'CFDAnalysisTools') 
+    sys.path.index(path2) 
 except ValueError:
-    sys.path.append(path2+'/'+'CFDAnalysisTools') 
+    sys.path.append(path2) 
 print(sys.path)
 
 
+import CFDAnalysisTools.VTK_filters as vt
+import CFDAnalysisTools.CSV_plotter as ct
 
 SIZE=2;
 SIZE2=0.8;
@@ -48,11 +46,7 @@ res=1000#resolution
 
 
 path=os.getcwd()
-
 vtuname= '/3D_FlowPastCylinderExample'+'_'+str(vtu_number)+'.pvtu'
-
-print(vtuname)
-
 color='blue'
 label='example'
 X,Y=vt.VTKfilter(path, vtuname, field).Line(X1,X2,Y1,Y2,Z1,Z2,res)
