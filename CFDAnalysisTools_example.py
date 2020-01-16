@@ -10,17 +10,17 @@ ct.Plot('file.csv','label').plotscatter(SIZE,SIZE2,'markercolor','markerstyle')
 ############## VTK plotter
 field='TimeAverageVelocity'
 vtu_number='50'
-U_C=0.39; #speed
-D=0.01; #diameter
+U_C=0.39; #scaling variable 1 (set to 0.0 if none)
+D=0.01; #scaling variable 2 
 
 X=[]
 Y=[]
 
-X1=0.05
-X2=X1+10*D
-Y1=0.15
+X1=0.00
+X2=X1
+Y1=0.00
 Y2=Y1
-Z1=0.015725
+Z1=0.00
 Z2=Z1
 res=1000 #resolution
 
