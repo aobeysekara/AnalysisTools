@@ -9,7 +9,7 @@ try:
     sys.path.index(path2) 
 except ValueError:
     sys.path.append(path2) 
-print(sys.path)
+
 
 
 import CFDAnalysisTools.VTK_filters as vt
