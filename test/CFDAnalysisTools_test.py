@@ -2,8 +2,8 @@ import matplotlib.pyplot as plt
 import os
 import sys
 
-module_path = os.getcwd()
-path2= os.path.dirname(module_path)
+path = os.getcwd()
+path2= os.path.dirname(path)
 
 try:
     sys.path.index(path2) 
@@ -18,7 +18,7 @@ import CFDAnalysisTools.CSV_plotter as ct
 SIZE=2;
 SIZE2=0.8;
 ################## CSV Plotter
-ct.Plot('LaurencoShih_streamwisewake.csv','Laurenco & Shih (1993)').plotscatter(SIZE,SIZE2,'black','x')
+ct.Plot(path + '/results/LaurencoShih_streamwisewake.csv','Laurenco & Shih (1993)').plotscatter(SIZE,SIZE2,'black','x')
 
 
 ############## VTK plotter
@@ -45,8 +45,8 @@ Z2=Z1
 res=1000#resolution
 
 
-path=os.getcwd()
-vtuname= '/3D_FlowPastCylinderExample'+'_'+str(vtu_number)+'.pvtu'
+
+vtuname= '/results/3D_FlowPastCylinderExample'+'_'+str(vtu_number)+'.pvtu'
 color='blue'
 label='example'
 X,Y=vt.VTKfilter(path, vtuname, field).Line(X1,X2,Y1,Y2,Z1,Z2,res)
