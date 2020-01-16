@@ -1,6 +1,6 @@
 import CFDAnalysisTools.VTK_filters as vt
 import CFDAnalysisTools.CSV_plotter as ct
-
+import matplotlib.pyplot as plt
 
 SIZE=2;
 SIZE2=0.8;
@@ -24,12 +24,15 @@ Z1=0.015725
 Z2=Z1
 res=1000 #resolution
 
+N1=0 #component (if vector) to plot X(0=x,1=y,2=z)
+N2=0 #component (if vector) to plot Y(0=x,1=y,2=z)
+
 path='path'
 vtuname= 'filename'+'_'+str(vtu_number)+'.pvtu'
 color='black'
 label='label1'
 X,Y=vt.VTKfilter(path, vtuname, field).Line(X1,X2,Y1,Y2,Z1,Z2,res)
-vt.Plotter(X,Y,label,color).VTKplot(X1,0,D,U_C)
+vt.Plotter(X,Y,label,color).VTKplot(X1,0,D,U_C, N1, N2)
 
 
 ###
