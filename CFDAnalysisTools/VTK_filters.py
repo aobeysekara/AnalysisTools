@@ -35,6 +35,7 @@ import numpy as np
 import vtk
 from math import *
 from scipy import interpolate
+from scipy.signal import argrelextrema
 
 
 class VTKfilter():
@@ -129,6 +130,54 @@ class VTKfilter():
                 Dline.append(detector[j][:])
                 Field.append( data.GetPointData().GetScalars(data_name_field).GetTuple(j))
         return Dline, Field
+
+    def Contour(self, val):
+        parallel=False
+        if self.vtuname.endswith(".pvtu"):
+            parallel=True
+        # NAME OF THE VARIABLE YOU WANT TO EXTRACT DATA FROM
+        path=self.path
+        data_name_field = self.field
+        # Initial
+        if (parallel==True):
+            reader = vtk.vtkXMLPUnstructuredGridReader()
+        else:
+            reader = vtk.vtkXMLUnstructuredGridReader()
+        reader.SetFileName(self.path+self.vtuname)
+        reader.Update()
+
+
+        field=[]
+        coords=[]
+        X=[]
+        Y=[]
+        ugrid = reader.GetOutput()
+        ugrid.GetPointData().SetActiveScalars(data_name_field)
+
+        Contour = vtk.vtkContourFilter()
+        Contour.SetInputData(ugrid)
+        Contour.SetNumberOfContours(1)
+        Contour.SetValue(0, val)
+        Contour.Update()
+        # Fields=Contour.GetOutputDataObject(0)
+        CContour=Contour.GetOutput()
+
+        num=CContour.GetNumberOfPoints()
+        print(num)
+        for i in range(num):
+            #field.append(CContour.GetPointData().GetScalars().GetTuple3(i))
+            coords.append(CContour.GetPoints().GetData().GetTuple3(i))
+            X.append(float(coords[i][0]))
+            Y.append(float(coords[i][1]))
+            # for i in range(0,4000):
+        #      field.append(Contour.GetPointData().GetScalars().GetTuple3(i))
+
+        # plt.plot(np.unique(Y), np.poly1d(np.polyfit(Y, X, 25))(np.unique(Y)))
+        #
+
+        return coords, X,Y
+
+
 
 class Plotter():
     def __init__(self, X, Y, label, color):
