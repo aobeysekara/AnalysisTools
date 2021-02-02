@@ -7,6 +7,7 @@ Python tools and examples for analysis of numerical results (such as from IC-FER
 
 Step 1:
 - Fork 
+
 Step 2:
 - Check which version of VTK you are using (tested with vtk6)
 - Run example as in CFDAnalysisTools_example (which compares experimental results in a csv file with results derived from a line probe in VTK) 
