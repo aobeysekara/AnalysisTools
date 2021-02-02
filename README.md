@@ -15,11 +15,11 @@ Step 2:
 
 
 
-EXAMPLE:
+EXAMPLE (vtk line data and plot):
 
 Field and file data: 
 ```
-field='TimeAverageVelocity'
+field='Field_name'
 vtu_number='50'
 U_C=0.39; #scaling variable 1 (set to 0.0 if none)
 D=0.01; #scaling variable 2 
@@ -49,9 +49,14 @@ Call functions:
 ```
 X,Y=vt.VTKfilter(path, vtuname, field).Line(X1,X2,Y1,Y2,Z1,Z2,res)
 vt.Plotter(X,Y,label,color).VTKplot(X1,0,D,U_C, N1, N2)
-
 ```
 
-
-
+Plot:
+```
+plt.xlabel('x')
+plt.ylabel('y')
+plt.title('Title')
+plt.legend()
+plt.show()
+```
 Run the test case using 'python CFDAnalysisTools_test.py' in the test folder to check if this works in your system
