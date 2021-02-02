@@ -12,10 +12,22 @@ Step 2:
 - Check which version of VTK you are using (tested with vtk6)
 - Run example as in CFDAnalysisTools_example (which compares experimental results in a csv file with results derived from a line probe in VTK) 
 
+**EXAMPLE 1** (import libraries)
+```
+import CFDAnalysisTools.VTK_filters as vt
+import CFDAnalysisTools.CSV_plotter as ct
+import matplotlib.pyplot as plt
+```
 
+**EXAMPLE 2** (plotting CSV data)
+```
+SIZE=2; # marker size
+SIZE2=0.8; # line thickness
 
+ct.Plot('file.csv','label').plotscatter(SIZE,SIZE2,'markercolor','markerstyle')
+```
 
-**EXAMPLE** (vtk line data and plot):
+**EXAMPLE 3** (vtk line data and plot):
 
 Field and file data: 
 ```
@@ -29,6 +41,7 @@ Setting coordinates:
 ```
 X=[]
 Y=[]
+
 X1=0.00
 X2=X1
 Y1=0.00
