@@ -16,7 +16,7 @@ X=[]
 Y=[]
 color='black'
 label='label1'
-path='/media/Data2/ASIRI/WORK/AMCG/ANDREAS/DataFile/'
+path=''
 #path='/media/Data2/ASIRI/WORK/AMCG/ANDREAS/CFDAnalysisTools/DataFileLong/'
 numpeaks=[]
 
