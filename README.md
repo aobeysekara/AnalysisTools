@@ -15,7 +15,7 @@ Step 2:
 
 
 
-1. EXAMPLE (vtk line data and plot):
+**EXAMPLE** (vtk line data and plot):
 
 Field and file data: 
 ```
