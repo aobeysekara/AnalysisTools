@@ -39,19 +39,25 @@ res=1000 #resolution
 
 N1=0 #component (if vector) to plot X(0=x,1=y,2=z)
 N2=0 #component (if vector) to plot Y(0=x,1=y,2=z)
-
+```
+Name of the file:
+```
 path='path'
 vtuname= 'filename'+'_'+str(vtu_number)+'.pvtu'
 color='black'
 label='label1'
 ```
-Call functions:
+Filter f(x):
 ```
 X,Y=vt.VTKfilter(path, vtuname, field).Line(X1,X2,Y1,Y2,Z1,Z2,res)
-vt.Plotter(X,Y,label,color).VTKplot(X1,0,D,U_C, N1, N2)
 ```
 
-Plot:
+Plot f(x):
+```
+vt.Plotter(X,Y,label,color).VTKplot(X1,0,D,U_C, N1, N2)
+
+```
+Display plot:
 ```
 plt.xlabel('x')
 plt.ylabel('y')
