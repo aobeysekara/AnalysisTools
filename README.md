@@ -1,8 +1,8 @@
 # AnalysisTools
 (WIP)
 Python tools and examples for analysis of numerical results (such as from IC-FERST/Fluidity) that use VTK (such as vtu and pvtu files)
-- works for parallel and serial vtk output files
-- outputs results to matplotlib plot files
+- Works for parallel and serial vtk output files
+- Display results with matplotlib plot
 - Main classes and VTK scripts are located in directory <CFDAnalysisTools>
 
 Step 1:
